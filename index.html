@@ -14,7 +14,8 @@ instructor: ["Leah Wasser", "Mariela Perignon"]
 assistant: []
 contact: lwasser@neoninc.org
 raw: raw.github.com/lwasser/2015-04-15-SEA-UCAR/gh-pages
-eventbrite: 
+eventbrite:
+language: python
 ---
 <!--
     Edit the values in the parameter block above to be appropriate for your bootcamp.
@@ -31,7 +32,7 @@ eventbrite:
 </p>
 
 <p>
-Data Carpentry workshops are designed for any researcher who has data they want to analyze, and no prior computational experience is required. This hands-on workshop teaches basic concepts, skills and tools for working more effectively with data. We will cover data organization in spreadsheets, data cleaning, basic SQL syntax, the Shell command line, and Python for data analysis and visualization using examples from biology. Participants should bring their laptops and plan to participate actively. By the end of the workshop learners should be able to more effectively manage and analyze data and be able to apply the tools and approaches directly to their ongoing research. 
+Data Carpentry workshops are designed for any researcher who has data they want to analyze, and no prior computational experience is required. This hands-on workshop teaches basic concepts, skills and tools for working more effectively with data. We will cover data organization in spreadsheets, data cleaning, basic SQL syntax, the Shell command line, and Python for data analysis and visualization using examples from biology. Participants should bring their laptops and plan to participate actively. By the end of the workshop learners should be able to more effectively manage and analyze data and be able to apply the tools and approaches directly to their ongoing research.
 <p>
 Data Carpentry's aim is to teach researchers basic concepts, skills,
 and tools for working with data so that they can get more done in less
@@ -41,8 +42,8 @@ time, and with less pain.
 Preliminary schedule:
 <ul>
 <li>  Day 1 morning: Data organization best practices in spreadsheets, Introduction to Python
-<li>  Day 1 afternoon: Introduction to databases, combining and querying data using SQL, 
-<li>  Day 2 morning: Working with Data in Python's Pandas 
+<li>  Day 1 afternoon: Introduction to databases, combining and querying data using SQL,
+<li>  Day 2 morning: Working with Data in Python's Pandas
 <li>  Day 2 afternoon: Data analysis and visualization in Python
 </ul>
 
@@ -78,7 +79,7 @@ Preliminary schedule:
 -->
 <p>
   <strong>Who:</strong>
-  The course is aimed at faculty, research staff, postdocs, graduate students, advanced undergraduates, and other researchers in any field. No prior computational experience is required. 
+  The course is aimed at faculty, research staff, postdocs, graduate students, advanced undergraduates, and other researchers in any field. No prior computational experience is required.
 </p>
 
 <!--
@@ -91,7 +92,7 @@ Preliminary schedule:
   Get directions with
   <a href="http://www.openstreetmap.org/?mlat={{ page.latlng | replace:',','&mlon=' }}&zoom=16">OpenStreetMap</a>
   or
-  <a href="http://maps.google.com/maps?q={{ page.latlng }}">Google Maps</a>. 
+  <a href="http://maps.google.com/maps?q={{ page.latlng }}">Google Maps</a>.
 </p>
 {% endif %}
 
@@ -136,7 +137,7 @@ Data Carpentry is supported by the <a href=http://http://www.moore.org/>Gordon a
 {% if page.eventbrite %}
 <h2>Registration</h2>
 <p>
- Registration is through EventBrite, see below.</p> 
+ Registration is through EventBrite, see below.</p>
 <iframe src="http://www.eventbrite.com/tickets-external?eid={{page.eventbrite}}&ref=etckt" frameborder="0" width="100%" height="210" scrolling="auto"></iframe>
 {% endif %}
 
@@ -196,7 +197,7 @@ Data Carpentry is supported by the <a href=http://http://www.moore.org/>Gordon a
 <li><a href=http://www.computerworld.com/s/article/9239625/Beginner_s_guide_to_R_Introduction>Beginner's Guide to R from Computer World</a>
 <li><a href=http://www.scoop.it/t/r-for-journalists>R for Journalists</a>
 <li><a href=http://www.r-bloggers.com/>R Bloggers</a>
-<li><a href=http://www.inside-r.org/>inside-R</a> 
+<li><a href=http://www.inside-r.org/>inside-R</a>
 <li><a href=http://ropensci.org/>rOpenSci</a>
 </ul>
 
@@ -215,18 +216,29 @@ Data Carpentry is supported by the <a href=http://http://www.moore.org/>Gordon a
 <h2>Setup</h2>
 
 <p>
-  To participate in a Data Carpentry workshop, 
+  To participate in a Data Carpentry workshop,
   you will need working copies of the software described below.
   Please make sure to install everything
   (or at least to download the installers)
-  <em>before</em> the start of your bootcamp. 
-  
+  <em>before</em> the start of your bootcamp.
+
 Participants should bring and use their own laptops to insure the proper setup of tools for an efficient workflow once you leave the workshop.
-  
-  
+
+
 </p>
 
 {% include setup.html %}
+
+
+
+
 -->
+{% include setup_2.html %}
+
+{% if page.language == "python" %}
+{% include pythonSetup.html %}
+{% else %}
+{% include rSetup.html %}
+{% endif %}
 
 
