@@ -31,7 +31,7 @@ $
 
 The dollar sign is a **prompt** that shows that the shell is waiting for input. Your shell might show something more elaborate, like the name of your computer and your current directory followed by the prompt.
 
-###### Command: `whoami`
+#### Command: `whoami`
 
 Type the command `whoami` and press the *Enter* key (sometimes marked *Return*) to send the command to the shell.
 
@@ -53,7 +53,7 @@ When we type `whoami`, the shell:
 4.  displays a new prompt to tell us that it's ready for more commands.
 
 
-###### Command: `pwd`
+#### Command: `pwd`
 
 We can find out where we are in the file system by running a command called `pwd`
 (which stands for "print working directory").
@@ -91,7 +91,7 @@ let's have a look at how the file system as a whole is organized.
 At the top is the **root directory**,
 which holds everything that is inside the file system.
 We point to the root directory using a slash character `/`.
-This is the leading slash in `/users/nelle` - it indicates that the **path** to that folder starts at the root directory. 
+This is the leading slash in `/users/nelle` - it indicates that the **path** to that folder starts at the root directory. Paths that start at the root are called **absolute paths**.
 
 The root directory contains multiple other directories, depending on your operating system and the particular configuration of your computer. Tracing back from the output of `pwd`, we know that Nelle’s root directory (indicated by the first `/`) contains at least one directory, the folder "users" (`/users`). The directory `users` in turn contains at least one directory, a folder named "nelle” (`/users/nelle`).
 
@@ -100,7 +100,7 @@ When it appears at the front of a path,
 it refers to the root directory. When it appears *inside* a name,
 it just serves as a separator.
 
-###### Command: `ls`
+#### Command: `ls`
 
 We can see what’s inside the current working directory using the command `ls`, which stands for "listing":
 
@@ -115,7 +115,10 @@ Desktop    notes.txt           writing
 The command `ls` prints the names of the files and directories in the current directory in alphabetical order,
 arranged neatly into columns.
 We can make its output more comprehensible by using the **flag** `-F`,
-which tells `ls` to add a trailing `/` to the names of directories:
+which tells `ls` to add a trailing `/` to the names of directories. Note that there is a space between `ls` and `-F`:
+without it,
+the shell thinks we're trying to run a command called `ls-F`,
+which doesn't exist:
 
 ```shell
 $ ls -F
@@ -131,44 +134,30 @@ Here,
 we can see that `/users/nelle` contains seven **sub-directories**.
 The names that don't have trailing slashes,
 like `notes.txt`, `pizza.cfg`, and `solar.pdf`,
-are plain old files.
-And note that there is a space between `ls` and `-F`:
-without it,
-the shell thinks we're trying to run a command called `ls-F`,
-which doesn't exist.
+are files.
 
-## What's In A Name?
-
-You may have noticed that all of Nelle's files' names are "something dot
-something". The "dot something" part of the file name is known as the
-**filename extension**. Depending on your operating system and the
-settings of your computer, you might or might We can give a file almost any name we choose, but
-the operating system won’t know what to do with that file (what type of
-file it is, how to open it, etc.) unless it has that extension. Most
-applications will automatically append the fie
-
-
-
-When we create and save a document within an application, we
-can choose to call a file `mythesis` or
-almost anything else we want. However, most people use two-part names
-most of the time to help them (and their programs) tell different kinds
-of files apart. The second part of such a name is called the
-**filename extension**, and indicates
-what type of data the file holds: `.txt` signals a plain text file, `.pdf`
-indicates a PDF document, `.cfg` is a configuration file full of parameters
-for some program or other, and so on.
+> ### What's In A Name?
+> 
+> You may have noticed that all of Nelle's files' names are "something dot
+> something". The "dot something" part of the file name is known as the
+> **filename extension**. Depending on your operating system and the
+> settings of your computer, you might or might not see these extensions in the GUI.
+> 
+> We can give a file almost any name we choose. The filename extension is not required,
+> but it is there to help the operating system (and the human!) understand the content
+> of the file. For example, without an extension, the system won’t know which application
+> to use to open the file. Most applications will automatically append a filename extension
+> when a file is saved, saving us the trouble.
 >
-This is just a convention, albeit an important one. Files contain
-bytes: it's up to us and our programs to interpret those bytes
-according to the rules for PDF documents, images, and so on.
->
-Naming a PNG image of a whale as `whale.mp3` doesn't somehow
-magically turn it into a recording of whalesong, though it *might*
-cause the operating system to try to open it with a music player
-when someone double-clicks it.
+> The filename extensions are just a convention, albeit an important one. Files contain
+> bytes: it's up to us and our programs to interpret those bytes
+> according to the rules for PDF documents, images, and so on. Naming a PNG image of a
+> whale as `whale.mp3` doesn't somehow magically turn it into a recording of whalesong,
+> though it *might* cause the operating system to try to open it with a music player
+> when someone double-clicks it.
 
-Now let's take a look at what's in Nelle's `data` directory by running `ls -F data`,
+
+We can look at the contents of other directories even when they are not the current working directory. We can look at what's in Nelle's `data` directory by running `ls -F data`,
 i.e.,
 the command `ls` with the **arguments** `-F` and `data`.
 The second argument --- the one *without* a leading dash --- tells `ls` that
@@ -187,22 +176,26 @@ it's possible to put hundreds of files in our home directory,
 just as it's possible to pile hundreds of printed papers on our desk,
 but it's a self-defeating strategy.
 
-Notice, by the way that we spelled the directory name `data`.
-It doesn't have a trailing slash:
-that's added to directory names by `ls` when we use the `-F` flag to help us tell things apart.
-And it doesn't begin with a slash because it's a **relative path**,
-i.e., it tells `ls` how to find something from where we are,
+We spelled the name of the directory as `data`, without a trailing slash. The slash was added by `ls` to the directory names because we used the `-F` flag to help us tell things apart, but it is not part of the folder names. Either `data` or `data/` would have worked with the `ls` command, though. The shell can still understand what we want.
+
+If we wanted to see what’s inside the sub-sub-directory `pdb`, of the sub-directory `data`, of Nelle’s home directory, we could write:
+
+```shell
+$ ls -F data/pdb
+```
+
+This would return a list of all of the files within that folder. The path to the directory `pdb` doesn’t start with a slash because it’s a **relative path**, i.e., it tells `ls` how to find something from where we are,
 rather than from the root of the file system.
 
-## Parameters vs. Arguments
+
+> ### Parameters vs. Arguments
 >
-According to [Wikipedia](https://en.wikipedia.org/wiki/Parameter_(computer_programming)#Parameters_and_arguments),
-the terms argument and **parameter**
-mean slightly different things.
-In practice,
-however,
-most people use them interchangeably or inconsistently,
-so we will too.
+> According to [Wikipedia](https://en.wikipedia.org/wiki/Parameter_(computer_programming)#Parameters_and_arguments),
+> the terms argument and **parameter**
+> mean slightly different things.
+> In practice,
+> however,
+> most people use them interchangeably or inconsistently, so that is what we’ll do.
 
 If we run `ls -F /data` (*with* a leading slash) we get a different answer,
 because `/data` is an **absolute path**:
@@ -218,23 +211,10 @@ The leading `/` tells the computer to follow the path from the root of the files
 so it always refers to exactly one directory,
 no matter where we are when we run the command.
 
-What if we want to change our current working directory?
-Before we do this,
-`pwd` shows us that we're in `/users/nelle`,
-and `ls` without any arguments shows us that directory's contents:
+Nelle happens to have a folder in the root directory named `data`, so she got a list of files in return to that command. If you don’t have a folder by that name, the shell will return an error indicating that the file or directory doesn’t exist.
 
-```shell
-$ pwd
 
-/users/nelle
-```
-```shell
-$ ls
-
-creatures  molecules           pizza.cfg
-data       north-pacific-gyre  solar.pdf
-Desktop    notes.txt           writing
-```
+#### Command: `cd`
 
 We can use `cd` followed by a directory name to change our working directory.
 `cd` stands for "change directory",
