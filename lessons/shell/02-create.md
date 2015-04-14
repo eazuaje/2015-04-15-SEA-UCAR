@@ -1,306 +1,301 @@
 ---
-layout: page
+layout: lesson
+root: .
 title: The Unix Shell
 subtitle: Creating Things
 minutes: 15
 ---
-> ## Learning Objectives
->
-> *   Create a directory hierarchy that matches a given diagram.
-> *   Create files in that hierarchy using an editor or by copying and renaming existing files.
-> *   Display the contents of a directory using the command line.
-> *   Delete specified files and/or directories.
+### Learning Objectives
+*   Create a directory hierarchy that matches a given diagram.
+*   Create files in that hierarchy using an editor or by copying and renaming existing files.
+*   Display the contents of a directory using the command line.
+*   Delete specified files and/or directories.
 
-We now know how to explore files and directories,
-but how do we create them in the first place?
+From the previous lesson, we now know how to explore files and directories. You probably already know how to create files and folders using the desktop environment of your operating system. These are tasks that we can also do through the command line, which will come in handy if you ever need to automate the process.
+
+## Creating new directories
+
 Let's go back to Nelle's home directory,
 `/users/nelle`,
 and use `ls -F` to see what it contains:
 
-~~~ {.input}
+```shell
 $ pwd
-~~~
-~~~ {.output}
+
 /users/nelle
-~~~
-~~~ {.input}
+
 $ ls -F
-~~~
-~~~ {.output}
+
 creatures/  molecules/           pizza.cfg
 data/       north-pacific-gyre/  solar.pdf
 Desktop/    notes.txt            writing/
-~~~
+```
 
-Let's create a new directory called `thesis` using the command `mkdir thesis`
-(which has no output):
+##### Command: `mkdir`
 
-~~~ {.input}
+Let's create a new folder called `thesis` in her home directory. We do this with the command `mkdir <path_to_new_directory>`:
+
+```shell
 $ mkdir thesis
-~~~
-
-As you might (or might not) guess from its name,
-`mkdir` means "make directory".
-Since `thesis` is a relative path
-(i.e., doesn't have a leading slash),
+```
+The command `mkdir` stands for "make directory" and has no output.
+The argument `thesis` is the path to the new directory. It is a relative path
+(since it doesn't have a leading slash), so
 the new directory is created in the current working directory:
 
-~~~ {.input}
+```shell
 $ ls -F
-~~~
-~~~ {.output}
+
 creatures/  north-pacific-gyre/  thesis/
 data/       notes.txt            writing/
 Desktop/    pizza.cfg
 molecules/  solar.pdf
-~~~
+```
+Nelle's home directory now contains a folder named `thesis`. However, there's nothing in it yet:
 
-However, there's nothing in it yet:
-
-~~~ {.input}
+```shell
 $ ls -F thesis
-~~~
+```
 
-> ## Touching Files {.callout}
+Because the directory is empty, the command `ls` returns nothing.
+
+## Creating new files
+
+> ### Touching Files
 >
-> One of the simplest ways to create an empty file is via the `touch` command.
+> One of the simplest ways to create an empty file through the command line is via the `touch` command.
 > Change the working directory to `thesis` using `cd`,
-> then touch an empty file called `draft.txt`:
+> then *touch* an empty file called `empty.txt`:
 >
-> ~~~ {.input}
+> ```shell
 > $ cd thesis
-> $ touch draft.txt
-> ~~~
+> $ touch empty.txt
+> ```
 >
 > If we check the directory contents now,
 >
-> ~~~ {.input}
-> $ ls -F .
-> ~~~
-> ~~~ {.output}
-> draft.txt
-> ~~~
+> ```shell
+> $ ls -F 
+>
+> empty.txt
+> ```
 
 Let's change our working directory to `thesis` using `cd`,
-then run a text editor called Nano to create a file called `draft.txt`:
+then run a text editor called `nano` to create a file called `draft.txt`:
 
-~~~ {.input}
+```shell
 $ cd thesis
 $ nano draft.txt
-~~~
+```
 
-> ## Which Editor? {.callout}
+> ### Which Editor?
 > 
-> When we say, "`nano` is a text editor," we really do mean "text": it can
+> When we call `nano` a text editor, we really do mean "text": it can
 > only work with plain character data, not tables, images, or any other
-> human-friendly media. We use it in examples because almost anyone can
-> drive it anywhere without training, but please use something more
-> powerful for real work. On Unix systems (such as Linux and Mac OS X),
-> many programmers use [Emacs](http://www.gnu.org/software/emacs/) or
-> [Vim](http://www.vim.org/) (both of which are completely unintuitive,
-> even by Unix standards), or a graphical editor such as
-> [Gedit](http://projects.gnome.org/gedit/). On Windows, you may wish to
+> human-friendly media. We use it in examples because it doesn't require
+> much training. It is not the only command-line text editor out there:
+> many people use [Emacs](http://www.gnu.org/software/emacs/) or
+> [Vim](http://www.vim.org/), both of which are completely unintuitive,
+> even by Unix standards.
+>
+> Knowing how to create and modify text files from the command line is
+> often necessary when working, for example, with remote machines and
+> supercomputers. For real work (including writing code), however, you
+> should use something more powerful. On Macs, you can use something like
+> [TextWrangler](http://www.barebones.com/products/textwrangler/) or
+> [Gedit](http://projects.gnome.org/gedit/) (also for Linux). On Windows, you may wish to
 > use [Notepad++](http://notepad-plus-plus.org/).
-> 
-> No matter what editor you use, you will need to know where it searches
-> for and saves files. If you start it from the shell, it will (probably)
-> use your current working directory as its default location. If you use
-> your computer's start menu, it may want to save files in your desktop or
-> documents directory instead. You can change this by navigating to
-> another directory the first time you "Save As..."
 
-Let's type in a few lines of text,
-then use Control-O to write our data to disk:
+Type in a few lines of text,
+then use Control-O to write the file to the disk. The file will be saved in your current working directory.
 
-![Nano in action](fig/nano-screenshot.png)
-
-Once our file is saved,
+Once the file is saved,
 we can use Control-X to quit the editor and return to the shell.
-(Unix documentation often uses the shorthand `^A` to mean "control-A".)
+(Unix documentation often uses the shorthand `^A` to mean "Control-A").
 `nano` doesn't leave any output on the screen after it exits,
-but `ls` now shows that we have created a file called `draft.txt`:
+but `ls` now shows a file called `draft.txt` in the folder `thesis`:
 
-~~~ {.input}
+```shell
 $ ls
-~~~
-~~~ {.output}
+
 draft.txt
-~~~
+```
+
+## Deleting files and directories
+
+##### Command: `rm`
 
 Let's tidy up by running `rm draft.txt`:
 
-~~~ {.input}
+```shell
 $ rm draft.txt
-~~~
+```
 
-This command removes files ("rm" is short for "remove").
-If we run `ls` again,
-its output is empty once more,
-which tells us that our file is gone:
+This command deletes files from the file system ("rm" is short for "remove").
+If we run `ls` again, it shows no output, which tells us that our file is gone:
 
-~~~ {.input}
+```shell
 $ ls
-~~~
+```
 
-> ## Deleting Is Forever {.callout}
+> ### Deleting Is Forever
 > 
-> The Unix shell doesn't have a trash bin that we can recover deleted
-> files from (though most graphical interfaces to Unix do).  Instead,
-> when we delete files, they are unhooked from the file system so that
-> their storage space on disk can be recycled. Tools for finding and
-> recovering deleted files do exist, but there's no guarantee they'll
-> work in any particular situation, since the computer may recycle the
-> file's disk space right away.
+> Unlike desktop environments, the Unix shell doesn't have a trash bin from which we can recover "deleted"
+> files (until we "Empty trash" and really delete them). Instead,
+> when we delete files in the command-line using `rm`, they are
+> immediately unhooked from the file system and the storage space
+> they take up on the disk is made available for recycling. Because the data
+> itself is not instantaneously erased, there are tools that can find and
+> recover deleted files. There's no guarantee they'll
+> find the deleted file you are looking for, though, since the computer may have already
+> re-occupied the file's disk space with something else.
 
-Let's re-create that file
-and then move up one directory to `/users/nelle` using `cd ..`:
+Repeat the steps above to re-create the file you just deleted. Then move up one directory to `/users/nelle`, where the folder `thesis` lives:
 
-~~~ {.input}
-$ pwd
-~~~
-~~~ {.output}
-/users/nelle/thesis
-~~~
-~~~ {.input}
-$ nano draft.txt
-$ ls
-~~~
-~~~ {.output}
-draft.txt
-~~~
-~~~ {.input}
+```shell
 $ cd ..
-~~~
 
-If we try to remove the entire `thesis` directory using `rm thesis`,
-we get an error message:
+$ pwd
 
-~~~ {.input}
+/users/nelle
+
+$ ls -F
+
+creatures/  north-pacific-gyre/  thesis/
+data/       notes.txt            writing/
+Desktop/    pizza.cfg
+molecules/  solar.pdf
+```
+
+Try to remove the entire `thesis` directory using `rm thesis`:
+
+```shell
 $ rm thesis
-~~~
-~~~ {.error}
-rm: cannot remove `thesis': Is a directory
-~~~
 
-This happens because `rm` only works on files, not directories.
-The right command is `rmdir`,
+rm: cannot remove `thesis': Is a directory
+```
+
+##### Command: `rmdir`
+
+The command `rm` is meant to be used on files, not directories, so it produces an error. The command for deleting foldrs is `rmdir`,
 which is short for "remove directory".
 It doesn't work yet either, though,
 because the directory we're trying to remove isn't empty:
 
-~~~ {.input}
+```shell
 $ rmdir thesis
-~~~
-~~~ {.error}
+
 rmdir: failed to remove `thesis': Directory not empty
-~~~
+```
 
-This little safety feature can save you a lot of grief,
+This little safety feature --- not deleting directories that contain files --- can save you a lot of grief,
 particularly if you are a bad typist.
-To really get rid of `thesis` we must first delete the file `draft.txt`:
+To get rid of the folder `thesis`, we must first delete all of the files inside it:
 
-~~~ {.input}
+```shell
 $ rm thesis/draft.txt
-~~~
+
+$ ls thesis
+```
 
 The directory is now empty, so `rmdir` can delete it:
 
-~~~ {.input}
+```shell
 $ rmdir thesis
-~~~
+```
 
-> ## With Great Power Comes Great Responsibility {.callout}
+> ### With Great Power Comes Great Responsibility
 > 
-> Removing the files in a directory just so that we can remove the
-> directory quickly becomes tedious. Instead, we can use `rm` with the
-> `-r` flag (which stands for "recursive"):
+> Removing all of the files in a directory before we can remove the
+> directory can quickly becomes tedious. Instead of deleting every file individually, we can use `rm` with the
+> `-r` flag (which stands for "recursive") to delete the folder and everything inside it:
 > 
-> ~~~
+> ```
+> $ pwd
+>
+> /users/nelle
+>
 > $ rm -r thesis
-> ~~~
+> ```
 > 
-> This removes everything in the directory, then the directory itself. If
-> the directory contains sub-directories, `rm -r` does the same thing to
-> them, and so on. It's very handy, but can do a lot of damage if used
+> This removes everything inside the directory `thesis` (including files and folders inside any sub-directories), then the directory itself. The recursive flag is very handy, but it can do a lot of damage if used
 > without care.
 
-Let's create that directory and file one more time.
-(Note that this time we're running `nano` with the path `thesis/draft.txt`,
-rather than going into the `thesis` directory and running `nano` on `draft.txt` there.)
+## Moving and renaming files and directories
 
-~~~ {.input}
+Create the directory `thesis` and file `draft.txt` one more time.
+(We can run `nano` from Nelle's home directory with the path `thesis/draft.txt`,
+rather than going into the `thesis` directory and running `nano` on `draft.txt` there).
+
+```shell
 $ pwd
-~~~
-~~~ {.output}
+
 /users/nelle
-~~~
-~~~ {.input}
+
 $ mkdir thesis
-~~~
-~~~ {.input}
+
 $ nano thesis/draft.txt
 $ ls thesis
-~~~
-~~~ {.output}
-draft.txt
-~~~
 
-`draft.txt` isn't a particularly informative name,
-so let's change the file's name using `mv`,
+draft.txt
+```
+
+##### Command: `mv`
+
+Calling a file `draft.txt` isn't particularly informative. We can change the name of the file by using the command `mv`, 
 which is short for "move":
 
-~~~ {.input}
+```shell
 $ mv thesis/draft.txt thesis/quotes.txt
-~~~
+```
 
-The first parameter tells `mv` what we're "moving",
-while the second is where it's to go.
+The first parameter tells `mv` the current path of the file that we're "moving",
+while the second parameter is the path that we want it to have after it moves.
 In this case,
 we're moving `thesis/draft.txt` to `thesis/quotes.txt`,
 which has the same effect as renaming the file.
 Sure enough,
 `ls` shows us that `thesis` now contains one file called `quotes.txt`:
 
-~~~ {.input}
+```shell
 $ ls thesis
-~~~
-~~~ {.output}
+
 quotes.txt
-~~~
+```
 
 Just for the sake of inconsistency,
 `mv` also works on directories --- there is no separate `mvdir` command.
 
-Let's move `quotes.txt` into the current working directory.
+Let's move `quotes.txt` up into the current working directory, `/users/nelle`.
 We use `mv` once again,
 but this time we'll just use the name of a directory as the second parameter
-to tell `mv` that we want to keep the filename,
-but put the file somewhere new.
-(This is why the command is called "move".)
-In this case,
+to tell `mv` that we want to keep the filename
+but put the file somewhere new. Because we want the file to go into the current working directory,
 the directory name we use is the special directory name `.` that we mentioned earlier.
 
-~~~ {.input}
+```shell
 $ mv thesis/quotes.txt .
-~~~
+```
 
-The effect is to move the file from the directory it was in to the current working directory.
 `ls` now shows us that `thesis` is empty:
 
-~~~ {.input}
+```shell
 $ ls thesis
-~~~
+```
 
-Further,
-`ls` with a filename or directory name as a parameter only lists that file or directory.
-We can use this to see that `quotes.txt` is still in our current directory:
+> The target path for the command `mv` is relative to the current working directory,
+> not the current position of the file we want to move. A very common mistake is to write:
+>
+> ```shell
+> $ mv thesis/quotes.txt ..
+> ```
+>
+> This command would move `/users/nelle/thesis/quotes.txt' to `/users/quotes.txt' because the
+> target path `..` is one directory up from the current working directory.
 
-~~~ {.input}
-$ ls quotes.txt
-~~~
-~~~ {.output}
-quotes.txt
-~~~
+## Copying files and directories
+
+##### Command: `cp`
 
 The `cp` command works very much like `mv`,
 except it copies a file instead of moving it.
@@ -308,110 +303,106 @@ We can check that it did the right thing using `ls`
 with two paths as parameters --- like most Unix commands,
 `ls` can be given thousands of paths at once:
 
-~~~ {.input}
+```shell
 $ cp quotes.txt thesis/quotations.txt
-$ ls quotes.txt thesis/quotations.txt
-~~~
-~~~ {.output}
-quotes.txt   thesis/quotations.txt
-~~~
 
-To prove that we made a copy,
+$ ls quotes.txt thesis/quotations.txt
+
+quotes.txt   thesis/quotations.txt
+```
+
+To prove that we made a copy and not just some alias,
 let's delete the `quotes.txt` file in the current directory
 and then run that same `ls` again.
 
-~~~ {.input}
+```shell
 $ rm quotes.txt
+
 $ ls quotes.txt thesis/quotations.txt
-~~~
-~~~ {.error}
+
 ls: cannot access quotes.txt: No such file or directory
 thesis/quotations.txt
-~~~
+```
+
 This time it tells us that it can't find `quotes.txt` in the current directory,
-but it does find the copy in `thesis` that we didn't delete.
+but it does find the copy we made inside `thesis`.
 
-> ## Another Useful Abbreviation {.callout}
-> 
-> The shell interprets the character `~` (tilde) at the start of a path to
-> mean "the current user's home directory". For example, if Nelle's home
-> directory is `/home/nelle`, then `~/data` is equivalent to
-> `/home/nelle/data`. This only works if it is the first character in the
-> path: `here/there/~/elsewhere` is *not* `/home/nelle/elsewhere`.
 
-> ## Renaming files {.challenge}
->
-> Suppose that you created a `.txt` file in your current directory to contain a list of the 
-> statistical tests you will need to do to analyze your data, and named it: `statstics.txt`
->
-> After creating and saving this file you realize you misspelled the filename! You want to 
-> correct the mistake, which of the following commands could you use to do so?
->
-> 1. `cp statstics.txt statistics.txt`
-> 2. `mv statstics.txt statistics.txt`
-> 3. `mv statstics.txt .`
-> 4. `cp statstics.txt .`
+### Challenge:
 
-> ## Moving and Copying {.challenge}
-> 
-> What is the output of the closing `ls` command in the sequence shown below?
-> 
-> ~~~
-> $ pwd
-> /home/jamie/data
-> $ ls
-> proteins.dat
-> $ mkdir recombine
-> $ mv proteins.dat recombine
-> $ cp recombine/proteins.dat ../proteins-saved.dat
-> $ ls
-> ~~~
->
-> 1.   `proteins-saved.dat recombine`
-> 2.   `recombine`
-> 3.   `proteins.dat recombine`
-> 4.   `proteins-saved.dat`
+1. Suppose that you created a `.txt` file in your current directory to contain a list of the 
+statistical tests you will need to do to analyze your data, and named it: `statstics.txt`.
+After creating and saving this file you realize that you misspelled the filename! How would you
+correct your mistake?
 
-> ## Listing Directories and Files {.challenge}
->
-> Suppose that:
-> 
-> ~~~
-> $ ls -F
-> analyzed/  fructose.dat    raw/   sucrose.dat
-> ~~~
-> 
-> What command(s) could you run so that the commands below will produce the output shown?
-> 
-> ~~~
-> $ ls
-> analyzed/   raw/
-> $ ls analyzed
-> fructose.dat    sucrose.dat
-> ~~~
 
-> ## Copy with Multiple Filenames {.challenge}
->
-> What does `cp` do when given several filenames and a directory name, as in:
-> 
-> ~~~
-> $ mkdir backup
-> $ cp thesis/citations.txt thesis/quotations.txt backup
-> ~~~
-> 
-> What does `cp` do when given three or more filenames, as in:
-> 
-> ~~~
-> $ ls -F
-> intro.txt    methods.txt    survey.txt
-> $ cp intro.txt methods.txt survey.txt
-> ~~~
+2. What is the output of the closing `ls` command in the sequence shown below?
 
-> ## Listing Recursively and By Time {.challenge}
->
-> The command `ls -R` lists the contents of directories recursively,
-> i.e., lists their sub-directories, sub-sub-directories, and so on
-> in alphabetical order at each level.
-> The command `ls -t` lists things by time of last change,
-> with most recently changed files or directories first.
-> In what order does `ls -R -t` display things?
+```shell
+$ pwd
+
+/home/jamie/data
+
+$ ls
+
+proteins.dat
+
+$ mkdir recombine
+
+$ mv proteins.dat recombine
+
+$ cp recombine/proteins.dat ../proteins-saved.dat
+
+$ ls
+```
+
+1.   `proteins-saved.dat recombine`
+2.   `recombine`
+3.   `proteins.dat recombine`
+4.   `proteins-saved.dat`
+
+3. Suppose that you have these folders and files:
+
+```shell
+$ ls -F
+
+analyzed/   raw/
+
+$ ls analyzed
+
+fructose.dat    sucrose.dat
+```
+
+What command(s) could you run so your folder looks like this?
+
+```shell
+$ ls -F
+
+analyzed/  fructose.dat    raw/   sucrose.dat
+```
+
+3. What does `cp` do when given several filenames and a directory name, as in:
+
+```shell
+$ mkdir backup
+
+$ cp thesis/citations.txt thesis/quotations.txt backup
+
+```
+
+4. What does `cp` do when given multiple filenames, as in:
+
+```shell
+$ ls -F
+
+intro.txt    methods.txt    survey.txt
+
+$ cp intro.txt methods.txt survey.txt
+```
+
+5. The command `ls -R` lists the contents of directories recursively,
+i.e., lists their sub-directories, sub-sub-directories, and so on
+in alphabetical order at each level.
+The command `ls -t` lists things by time of last change,
+with most recently changed files or directories first.
+In what order does `ls -R -t` display things?

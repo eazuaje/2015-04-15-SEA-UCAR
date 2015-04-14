@@ -84,7 +84,7 @@ which is Nelle's **home directory**. The output to the `pwd` command in your own
 > inconsistent as the roolz uv Inglish speling, but we're stuck with it.
 
 
-## The file system
+## Exploring the file system
 
 To understand what a "home directory" is,
 let's have a look at how the file system as a whole is organized.
@@ -221,9 +221,7 @@ rather than from the root of the file system. The absolute path for the director
 
 We can use `cd`, followed by a path to a directory, to change our working directory.
 `cd` stands for "change directory",
-which is a bit misleading:
-the command doesn't change the directory itself,
-it changes our *address* in the file system, from the point of view of the the shell.
+which is a bit misleading: it changes our *position* in the file system, but it doesn't modify the directory itself.
 
 ```shell
 $ cd data
