@@ -1,6 +1,6 @@
 ---
 layout: lesson
-root: .
+root: 
 title: Data Carpentry - How to Test Software Setup
 ---
 
