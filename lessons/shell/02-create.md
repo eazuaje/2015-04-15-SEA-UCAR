@@ -356,10 +356,10 @@ $ cp recombine/proteins.dat ../proteins-saved.dat
 $ ls
 ```
 
-1.   `proteins-saved.dat recombine`
-2.   `recombine`
-3.   `proteins.dat recombine`
-4.   `proteins-saved.dat`
+  a. `proteins-saved.dat recombine`
+  b. `recombine`
+  c. `proteins.dat recombine`
+  d. `proteins-saved.dat`
 
 3. Suppose that you have these folders and files:
 
