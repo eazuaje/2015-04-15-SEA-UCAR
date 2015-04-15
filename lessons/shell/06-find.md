@@ -24,12 +24,11 @@ we will use a file that contains three haikus taken from a
 1998 competition in *Salon* magazine. For this set of examples 
 we're going to be working in the writing subdirectory:
 
-~~~ {.input}
+```shell
 $ cd
 $ cd writing
 $ cat haiku.txt
-~~~
-~~~ {.output}
+
 The Tao that is seen
 Is not the true Tao, until
 You bring fresh toner.
@@ -41,9 +40,9 @@ and the presence of absence:
 Yesterday it worked
 Today it is not working
 Software is like that.
-~~~
+```
 
-> ## Forever, or Five Years {.callout}
+> ### Forever, or Five Years
 >
 > We haven't linked to the original haikus because they don't appear to be on *Salon*'s site any longer.
 > As [Jeff Rothenberg said](http://www.clir.org/pubs/archives/ensuring.pdf),
@@ -51,14 +50,15 @@ Software is like that.
 
 Let's find lines that contain the word "not":
 
-~~~ {.input}
+```shell
 $ grep not haiku.txt
-~~~
-~~~ {.output}
+```
+
+``` 
 Is not the true Tao, until
 "My Thesis" not found
 Today it is not working
-~~~
+```
 
 Here, `not` is the pattern we're searching for.
 It's pretty simple:
@@ -68,13 +68,14 @@ The output is the three lines in the file that contain the letters "not".
 
 Let's try a different pattern: "day".
 
-~~~ {.input}
+```shell
 $ grep day haiku.txt
-~~~
-~~~ {.output}
+```
+ 
+```
 Yesterday it worked
 Today it is not working
-~~~
+```
 
 This time,
 two lines that include the letters "day" are outputted.
@@ -83,22 +84,22 @@ To restrict matches to lines containing the word "day" on its own,
 we can give `grep` with the `-w` flag.
 This will limit matches to word boundaries.
 
-~~~ {.input}
+```shell
 $ grep -w day haiku.txt
-~~~
 
-In this case, there aren't any, so `grep`'s output is empty.
+In this case, the word "day" does not show up by itself in the text, so `grep`'s output is empty.
 
 Another useful option is `-n`, which numbers the lines that match:
 
-~~~ {.input}
+```shell
 $ grep -n it haiku.txt
-~~~
-~~~ {.output}
+```
+
+```
 5:With searching comes loss
 9:Yesterday it worked
 10:Today it is not working
-~~~
+```
 
 Here, we can see that lines 5, 9, and 10 contain the letters "it".
 
@@ -108,10 +109,11 @@ since `-i` makes matching case-insensitive and `-v` inverts the match,
 using them both only prints lines that *don't* match the pattern
 in any mix of upper and lower case:
 
-~~~ {.input}
+```shell
 $ grep -i -v the haiku.txt
-~~~
-~~~ {.output}
+```
+ 
+```
 You bring fresh toner.
 
 With searching comes loss
@@ -119,7 +121,7 @@ With searching comes loss
 Yesterday it worked
 Today it is not working
 Software is like that.
-~~~
+```
 
 `grep` has lots of other options.
 To find out what they are, we can type `man grep`.
@@ -127,15 +129,14 @@ To find out what they are, we can type `man grep`.
 it prints a description of a command and its options,
 and (if you're lucky) provides a few examples of how to use it.
 
-To navigate through the `man` pages,
+The `man` interface is a line printer. To navigate through the `man` pages,
 you may use the up and down arrow keys to move line-by-line,
 or try the "b" and spacebar keys to skip up and down by full page.
 Quit the `man` pages by typing "q".
 
-~~~ {.input}
+```shell
 $ man grep
-~~~
-~~~ {.output}
+
 GREP(1)                                                                                              GREP(1)
 
 NAME
@@ -169,22 +170,24 @@ POSIX.)
 Interpret PATTERN as a list of fixed strings, separated by newlines, any of  which  is  to  be
 matched.  (-F is specified by POSIX.)
 ...        ...        ...
-~~~
+```
 
-> ## Wildcards {.callout}
+> ### Wildcards
 >
 > `grep`'s real power doesn't come from its options, though; it comes from
-> the fact that patterns can include wildcards. (The technical name for
+> the fact that patterns can include wildcards (The technical name for
 > these is **regular expressions**, which
-> is what the "re" in "grep" stands for.) Regular expressions are both complex
+> is what the "re" in "grep" stands for). Regular expressions are both complex
 > and powerful; if you want to do complex searches, please look at the lesson
-> on [our website](http://software-carpentry.org). As a taster, we can
+> on [the Software Carpentry website](http://software-carpentry.org). As a taster, we can
 > find lines that have an 'o' in the second position like this:
 >
+> ```shell
 >     $ grep -E '^.o' haiku.txt
 >     You bring fresh toner.
 >     Today it is not working
 >     Software is like that.
+> ```
 >
 > We use the `-E` flag and put the pattern in quotes to prevent the shell
 > from trying to interpret it. (If the pattern contained a '\*', for
@@ -197,9 +200,7 @@ While `grep` finds lines in files,
 the `find` command finds files themselves.
 Again,
 it has a lot of options;
-to show how the simplest ones work, we'll use the directory tree shown below.
-
-![File Tree for Find Example](fig/find-file-tree.svg)
+to show how the simplest ones work, we'll Nelle's file system a for an example.
 
 Nelle's `writing` directory contains one file called `haiku.txt` and four subdirectories:
 `thesis` (which is sadly empty),
@@ -217,24 +218,22 @@ Sure enough,
 `find`'s output is the names of the five directories in our little tree
 (including `.`):
 
-~~~ {.input}
+```shell
 $ find . -type d
-~~~
-~~~ {.output}
+
 ./
 ./data
 ./thesis
 ./tools
 ./tools/old
-~~~
+```
 
 If we change `-type d` to `-type f`,
 we get a listing of all the files instead:
 
-~~~ {.input}
+```shell
 $ find . -type f
-~~~
-~~~ {.output}
+
 ./haiku.txt
 ./tools/stats
 ./tools/old/oldtool
@@ -242,43 +241,41 @@ $ find . -type f
 ./thesis/empty-draft.md
 ./data/one.txt
 ./data/two.txt
-~~~
+```
 
-`find` automatically goes into subdirectories,
+The command `find` automatically goes into subdirectories,
 their subdirectories,
 and so on to find everything that matches the pattern we've given it.
 If we don't want it to,
 we can use `-maxdepth` to restrict the depth of search:
 
-~~~ {.input}
+```shell
 $ find . -maxdepth 1 -type f
-~~~
-~~~ {.output}
+ 
 ./haiku.txt
-~~~
+```
 
 The opposite of `-maxdepth` is `-mindepth`,
 which tells `find` to only report things that are at or below a certain depth.
 `-mindepth 2` therefore finds all the files that are two or more levels below us:
 
-~~~ {.input}
+```shell
 $ find . -mindepth 2 -type f
-~~~
-~~~ {.output}
+
+ 
 ./data/one.txt
 ./data/two.txt
 ./tools/format
 ./tools/stats
-~~~
+```
 
 Now let's try matching by name:
 
-~~~ {.input}
+```shell
 $ find . -name *.txt
-~~~
-~~~ {.output}
+ 
 ./haiku.txt
-~~~
+```
 
 We expected it to find all the text files,
 but it only prints out `./haiku.txt`.
@@ -286,9 +283,9 @@ The problem is that the shell expands wildcard characters like `*` *before* comm
 Since `*.txt` in the current directory expands to `haiku.txt`,
 the command we actually ran was:
 
-~~~ {.input}
+```shell
 $ find . -name haiku.txt
-~~~
+```
 
 `find` did what we asked; we just asked for the wrong thing.
 
@@ -298,16 +295,15 @@ put `*.txt` in single quotes to prevent the shell from expanding the `*` wildcar
 This way,
 `find` actually gets the pattern `*.txt`, not the expanded filename `haiku.txt`:
 
-~~~ {.input}
+```shell
 $ find . -name '*.txt'
-~~~
-~~~ {.output}
+ 
 ./data/one.txt
 ./data/two.txt
 ./haiku.txt
-~~~
+```
 
-> ## Listing vs. Finding {.callout}
+> ### Listing vs. Finding
 >
 > `ls` and `find` can be made to do similar things given the right options,
 > but under normal circumstances,
@@ -324,15 +320,14 @@ How can we combine that with `wc -l` to count the lines in all those files?
 
 The simplest way is to put the `find` command inside `$()`:
 
-~~~ {.input}
+```shell
 $ wc -l $(find . -name '*.txt')
-~~~
-~~~ {.output}
+ 
 11 ./haiku.txt
 300 ./data/two.txt
 70 ./data/one.txt
 381 total
-~~~
+```
 
 When the shell executes this command,
 the first thing it does is run whatever is inside the `$()`.
@@ -340,9 +335,9 @@ It then replaces the `$()` expression with that command's output.
 Since the output of `find` is the three filenames `./data/one.txt`, `./data/two.txt`, and `./haiku.txt`,
 the shell constructs the command:
 
-~~~ {.input}
+```shell
 $ wc -l ./data/one.txt ./data/two.txt ./haiku.txt
-~~~
+```
 
 which is what we wanted.
 This expansion is exactly what the shell does when it expands wildcards like `*` and `?`,
@@ -354,14 +349,13 @@ the second looks for lines inside those files that match another pattern.
 Here, for example, we can find PDB files that contain iron atoms
 by looking for the string "FE" in all the `.pdb` files above the current directory:
 
-~~~ {.input}
+```shell
 $ grep FE $(find .. -name '*.pdb')
-~~~
-~~~ {.output}
-../data/pdb/heme.pdb:ATOM     25 FE           1      -0.924   0.535  -0.518
-~~~
 
-> ## Binary Files {.callout}
+../data/pdb/heme.pdb:ATOM     25 FE           1      -0.924   0.535  -0.518
+```
+
+> ### Binary Files
 >
 > We have focused exclusively on finding things in text files. What if
 > your data is stored as images, in databases, or in some other format?
@@ -385,7 +379,7 @@ $ grep FE $(find .. -name '*.pdb')
 > modern programming languages, Python included, have borrowed a lot of
 > ideas from it, and imitation is also the sincerest form of praise.
 
-> ## Conclusion
+> ### Conclusion
 > 
 > The Unix shell is older than most of the people who use it. It has
 > survived so long because it is one of the most productive programming
@@ -398,66 +392,47 @@ $ grep FE $(find .. -name '*.pdb')
 > number of important operations which we can perform without thinking
 > about them."
 
-> ## Using grep {.challenge}
->
-> ~~~
-> The Tao that is seen
-> Is not the true Tao, until
-> You bring fresh toner.
->
-> With searching comes loss
-> and the presence of absence:
-> "My Thesis" not found.
->
-> Yesterday it worked
-> Today it is not working
-> Software is like that.
-> ~~~
->
-> From the above text, contained in the file `haiku.txt`, which command would result in the 
-> following output:
->
-> ~~~
-> and the presence of absence
-> ~~~
->
-> 1. `grep of haiku.txt`
-> 2. `grep -E of haiku.txt`
-> 3. `grep -w of haiku.txt`
-> 4. `grep -i of haiku.txt`
+### Challenges:
 
-> ## `find` pipeline reading comprehension {.challenge}
->
-> Write a short explanatory comment for the following shell script:
-> 
-> ~~~ {.input}
-> find . -name '*.dat' | wc -l | sort -n
-> ~~~
+1. How would you get the output:
 
-> ## Matching `ose.dat` but not `temp` {.challenge}
-> 
-> The `-v` flag to `grep` inverts pattern matching, so that only lines
-> which do *not* match the pattern are printed. Given that, which of
-> the following commands will find all files in `/data` whose names
-> end in `ose.dat` (e.g., `sucrose.dat` or `maltose.dat`), but do
-> *not* contain the word `temp`?
-> 
-> 1. `find /data -name '*.dat' | grep ose | grep -v temp`
-> 
-> 2. `find /data -name ose.dat | grep -v temp`
-> 
-> 3. `grep -v temp $(find /data -name '*ose.dat')`
-> 
-> 4. None of the above.
+```
+and the presence of absence
+```
 
-> ## Little Women {.challenge}
->
-> You and your friend, having just finished reading *Little Women* by
-> Louisa May Alcott, are in an argument.  Of the four sisters in the
-> book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the
-> most mentioned.  You, however, are certain it was Amy.  Luckily, you
-> have a file `LittleWomen.txt` containing the full text of the novel.
-> Using a`for` loop, how would you tabulate the number of times each
-> of the four sisters is mentioned?  Hint: one solution might employ
-> the commands `grep` and `wc` and a `|`, while another might utilize
-> `grep` options.
+from the a text file that contains this text?
+
+```
+The Tao that is seen
+Is not the true Tao, until
+You bring fresh toner.
+
+With searching comes loss
+and the presence of absence:
+"My Thesis" not found.
+
+Yesterday it worked
+Today it is not working
+Software is like that.
+```
+
+2. Write a short explanatory comment for the following shell script:
+
+```shell
+find . -name '*.dat' | wc -l | sort -n
+```
+
+3. The `-v` flag to `grep` inverts pattern matching, so that only lines
+which do *not* match the pattern are printed. Given that, how can you find all files in `/data` whose names
+end in `ose.dat` (e.g., `sucrose.dat` or `maltose.dat`), but do
+*not* contain the word `temp`?
+
+4. You and your friend, having just finished reading *Little Women* by
+Louisa May Alcott, are in an argument.  Of the four sisters in the
+book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the
+most mentioned.  You, however, are certain it was Amy.  Luckily, you
+have a file `LittleWomen.txt` containing the full text of the novel.
+Using a`for` loop, how would you tabulate the number of times each
+of the four sisters is mentioned?  Hint: one solution might employ
+the commands `grep` and `wc` and a `|`, while another might utilize
+`grep` options.
