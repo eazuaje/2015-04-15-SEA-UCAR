@@ -1,15 +1,15 @@
 ---
-layout: page
+layout: lesson
+root: .
 title: The Unix Shell
 subtitle: Finding Things
 minutes: 15
 ---
-> ## Learning Objectives
->
-> *   Use `grep` to select lines from text files that match simple patterns.
-> *   Use `find` to find files whose names match simple patterns.
-> *   Use the output of one command as the command-line parameters to another command.
-> *   Explain what is meant by "text" and "binary" files, and why many common tools don't handle the latter well.
+### Learning Objectives
+*   Use `grep` to select lines from text files that match simple patterns.
+*   Use `find` to find files whose names match simple patterns.
+*   Use the output of one command as the command-line parameters to another command.
+*   Explain what is meant by "text" and "binary" files, and why many common tools don't handle the latter well.
 
 You can guess someone's age by how they talk about search:
 young people use "Google" as a verb,

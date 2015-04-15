@@ -1,5 +1,6 @@
 ---
-layout: page
+layout: lesson
+root: .
 title: The Unix Shell
 subtitle: Shell Scripts
 minutes: 15
